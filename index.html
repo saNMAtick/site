@@ -77,7 +77,7 @@
             font-size: clamp(2.8rem, 6vw, 4.5rem);
             margin-bottom: 1rem;
             letter-spacing: -0.5px;
-            color: var(--white); /* Белый цвет для заголовка */
+            color: var(--white);
         }
         
         .header-subtitle {
@@ -461,15 +461,11 @@
     </style>
 </head>
 <body>
-    <!-- Аудио для фоновой музыки -->
-    <audio id="bgMusic" loop>
-        <source src="your-music-file.mp3" type="audio/mpeg">
-        Ваш браузер не поддерживает аудио элемент.
+    <audio id="bgMusic" loop muted>
+        <source src="love8.mp3" type="audio/mp3">
     </audio>
-    
-    <!-- Кнопка управления музыкой -->
     <div class="music-player" id="musicToggle">
-        <div class="music-icon">♪</div>
+        <div class="music-icon">♫</div>
     </div>
     
     <header>
@@ -552,13 +548,13 @@
             </div>
         </section>
         
-        <!-- Новая секция с видео дня рождения -->
+        <!-- Секция с видео дня рождения -->
         <section>
             <h2 class="section-title">День рождения</h2>
             <div class="video-container">
                 <div class="video-wrapper">
                     <!-- Замените src на ссылку вашего видео -->
-                    <iframe src="love7.mp4" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe id="birthdayVideo" src="love7.mp4" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
                 <p class="video-caption">Твой особенный день — 24 декабря 2007</p>
             </div>
@@ -589,7 +585,7 @@
     <footer>
         <div class="floating-hearts" id="hearts-container"></div>
         <div class="footer-content">
-            <p>Создано с любовью <span class="footer-heart">❤</span> специально для тебя, Алиночка! © 2025</p>
+            <p>Создано с <span class="footer-heart">❤</span> специально для тебя, Алиночка! © 2025</p>
         </div>
     </footer>
     
@@ -659,33 +655,145 @@
             const musicToggle = document.getElementById('musicToggle');
             let isPlaying = false;
             
-            // Попытка автоматического воспроизведения (может не работать в некоторых браузерах)
-            document.addEventListener('click', function() {
-                if (!isPlaying) {
-                    bgMusic.play()
-                        .then(() => {
-                            isPlaying = true;
-                            musicToggle.innerHTML = '<div class="music-icon">♫</div>';
-                        })
-                        .catch(error => {
-                            console.log('Автовоспроизведение заблокировано:', error);
-                        });
-                }
+            // Установка громкости на 7% (0.07)
+            bgMusic.volume = 0.07;
+            
+            // Функция для воспроизведения музыки
+            function playMusic() {
+                bgMusic.play()
+                    .then(() => {
+                        isPlaying = true;
+                        musicToggle.innerHTML = '<div class="music-icon">♫</div>';
+                    })
+                    .catch(error => {
+                        console.log('Ошибка воспроизведения:', error);
+                    });
+            }
+            
+            // Функция для остановки музыки
+            function pauseMusic() {
+                bgMusic.pause();
+                isPlaying = false;
+                musicToggle.innerHTML = '<div class="music-icon">♪</div>';
+            }
+            
+            // Автовоспроизведение музыки при загрузке страницы
+            document.addEventListener('click', function initAudio() {
+                playMusic();
+                document.removeEventListener('click', initAudio);
             }, { once: true });
             
             // Ручное управление музыкой
-            musicToggle.addEventListener('click', function() {
+            musicToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
                 if (isPlaying) {
-                    bgMusic.pause();
-                    isPlaying = false;
-                    this.innerHTML = '<div class="music-icon">♪</div>';
+                    pauseMusic();
                 } else {
-                    bgMusic.play();
-                    isPlaying = true;
-                    this.innerHTML = '<div class="music-icon">♫</div>';
+                    playMusic();
                 }
             });
+            
+            // Управление видео и синхронизация с музыкой
+            const video = document.getElementById('birthdayVideo');
+            let player;
+            
+            // Функция для обработки событий YouTube API
+            function onYouTubeIframeAPIReady() {
+                player = new YT.Player('birthdayVideo', {
+                    events: {
+                        'onStateChange': onPlayerStateChange
+                    }
+                });
+            }
+            
+            // Обработчик событий плеера YouTube
+            function onPlayerStateChange(event) {
+                // Если видео началось (воспроизводится)
+                if (event.data == YT.PlayerState.PLAYING) {
+                    pauseMusic(); // Останавливаем музыку
+                } 
+                // Если видео приостановлено или закончилось
+                else if (event.data == YT.PlayerState.PAUSED || event.data == YT.PlayerState.ENDED) {
+                    playMusic(); // Возобновляем музыку
+                }
+            }
+            
+            // Загрузка YouTube API
+            const tag = document.createElement('script');
+            tag.src = "https://www.youtube.com/iframe_api";
+            const firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+            
+            // Глобальная функция для YouTube API
+            window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
         });
+        document.addEventListener('DOMContentLoaded', function() {
+            const bgMusic = document.getElementById('bgMusic');
+            const musicToggle = document.getElementById('musicToggle');
+            let isPlaying = false;
+
+            // Установка громкости на 7% (0.07)
+            bgMusic.volume = 0.07;
+            
+            // Функция для воспроизведения музыки
+            function playMusic() {
+                bgMusic.muted = false; // Размутируем звук
+                bgMusic.play()
+                    .then(() => {
+                        isPlaying = true;
+                        musicToggle.innerHTML = '<div class="music-icon">♫</div>';
+                    })
+                    .catch(error => {
+                        console.log('Ошибка воспроизведения:', error);
+                        // Показываем кнопку для ручного запуска
+                        musicToggle.style.display = 'flex';
+                    });
+            }
+            
+            // Функция для остановки музыки
+            function pauseMusic() {
+                bgMusic.pause();
+                isPlaying = false;
+                musicToggle.innerHTML = '<div class="music-icon">♪</div>';
+            }
+
+            // Попытка автовоспроизведения при загрузке
+            function tryAutoplay() {
+                playMusic();
+                
+                // Проверяем, играет ли музыка через секунду
+                setTimeout(() => {
+                    if(!isPlaying) {
+                        // Если нет - показываем кнопку для ручного запуска
+                        musicToggle.style.display = 'flex';
+                    }
+                }, 1000);
+            }
+
+            // Запускаем попытку автовоспроизведения
+            tryAutoplay();
+
+            // Также пробуем запустить при любом взаимодействии пользователя
+            document.addEventListener('click', function() {
+                if(!isPlaying) {
+                    playMusic();
+                }
+            }, { once: true });
+
+            // Ручное управление музыкой
+            musicToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (isPlaying) {
+                    pauseMusic();
+                } else {
+                    playMusic();
+                }
+            });
+
+            // Остальной ваш JavaScript код...
+        });
+
+        // Код для управления YouTube видео (если нужно)
     </script>
 </body>
 </html>
