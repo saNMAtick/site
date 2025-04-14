@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Сайт, посвященный моей любви к Алине">
     <title>Алина - любовь моей жизни</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,6 +25,7 @@
             --radius-md: 10px;
             --radius-lg: 14px;
             --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --images-path: '';
         }
         
         * {
@@ -55,7 +55,6 @@
             color: inherit;
         }
         
-        /* Header */
         header {
             background: linear-gradient(to right, var(--black), var(--black));
             color: var(--white);
@@ -109,7 +108,6 @@
             transform: rotate(15deg);
         }
         
-        /* Main content */
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -138,7 +136,6 @@
             border-radius: 2px;
         }
         
-        /* Love letter */
         .love-letter {
             background: var(--white);
             padding: 4rem;
@@ -178,7 +175,6 @@
             color: var(--primary-dark);
         }
         
-        /* Gallery */
         .gallery {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -242,16 +238,34 @@
             opacity: 0.9;
         }
         
-        /* Video section */
-        .video-container {
+        .birthday-container {
             max-width: 800px;
             margin: 4rem auto;
             text-align: center;
         }
         
+        .birthday-item {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .birthday-item .edit-buttons {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 5px;
+            z-index: 10;
+        }
+        
+        .birthday-item:hover .edit-btn,
+        .birthday-item:hover .delete-btn {
+            opacity: 1;
+        }
+        
         .video-wrapper {
             position: relative;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
             border-radius: var(--radius-md);
@@ -274,7 +288,6 @@
             color: var(--text-light);
         }
         
-        /* Memories */
         .memories {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -328,7 +341,6 @@
             line-height: 1.7;
         }
         
-        /* Music player */
         .music-player {
             position: fixed;
             bottom: 20px;
@@ -356,7 +368,6 @@
             color: var(--primary-color);
         }
         
-        /* Footer */
         footer {
             background: var(--black);
             color: var(--white);
@@ -386,7 +397,6 @@
             100% { transform: scale(1); opacity: 0.8; }
         }
         
-        /* Floating hearts */
         .floating-hearts {
             position: absolute;
             width: 100%;
@@ -413,7 +423,165 @@
             100% { transform: translateY(-20vh) scale(1); opacity: 0; }
         }
         
-        /* Responsive */
+        .add-form {
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 2rem;
+            background: var(--white);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--gray-light);
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+        }
+        
+        .btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .btn:hover {
+            background: var(--primary-dark);
+        }
+        
+        .btn-secondary {
+            background: var(--gray-light);
+            color: var(--text-color);
+        }
+        
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+        }
+        
+        .btn-danger:hover {
+            background: #c82333;
+        }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        
+        .tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: var(--transition);
+        }
+        
+        .tab.active {
+            border-bottom: 3px solid var(--primary-color);
+            font-weight: 500;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .edit-buttons {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 5px;
+            z-index: 10;
+        }
+        
+        .edit-btn, .delete-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.9);
+            color: var(--text-color);
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            opacity: 0;
+        }
+        
+        .gallery-item:hover .edit-btn, 
+        .gallery-item:hover .delete-btn,
+        .memory-card:hover .edit-btn,
+        .memory-card:hover .delete-btn {
+            opacity: 1;
+        }
+        
+        .edit-btn:hover {
+            background: var(--primary-light);
+            color: var(--primary-color);
+        }
+        
+        .delete-btn:hover {
+            background: #ffebee;
+            color: #dc3545;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: var(--radius-md);
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-title {
+            margin-bottom: 1.5rem;
+        }
+        
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
         @media (max-width: 768px) {
             .love-letter {
                 padding: 2.5rem 2rem;
@@ -457,11 +625,25 @@
             .music-icon {
                 font-size: 20px;
             }
+            
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab {
+                border-bottom: none;
+                border-left: 3px solid transparent;
+            }
+            
+            .tab.active {
+                border-bottom: none;
+                border-left: 3px solid var(--primary-color);
+            }
         }
     </style>
 </head>
 <body>
-    <audio id="bgMusic" loop muted>
+    <audio id="bgMusic" loop>
         <source src="love8.mp3" type="audio/mp3">
     </audio>
     <div class="music-player" id="musicToggle">
@@ -500,84 +682,105 @@
             </div>
         </section>
         
-        <section>
+        <section id="moments-section">
             <h2 class="section-title">Наши моменты</h2>
-            <div class="gallery">
-                <div class="gallery-item">
-                    <img id="love1" src="love1.jpg" alt="Алина улыбается" class="gallery-img">
-                    <div class="gallery-caption">
-                        <h3>Твоя улыбка</h3>
-                        <p>Свет, который согревает моё сердце</p>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img id="love2" src="love2.jpg" alt="Алина на природе" class="gallery-img">
-                    <div class="gallery-caption">
-                        <h3>Естественная красота</h3>
-                        <p>Гармония с окружающим миром</p>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img id="love3" src="love3.jpg" alt="Алина в городе" class="gallery-img">
-                    <div class="gallery-caption">
-                        <h3>Городские огни</h3>
-                        <p>Но ты — самый яркий свет</p>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img id="love4" src="love4.jpg" alt="Алина смеётся" class="gallery-img">
-                    <div class="gallery-caption">
-                        <h3>Моменты счастья</h3>
-                        <p>Которые хочется сохранить навсегда</p>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img id="love5" src="love5.jpg" alt="Алина задумалась" class="gallery-img">
-                    <div class="gallery-caption">
-                        <h3>Размышления</h3>
-                        <p>Как я стала счастливой в один миг?</p>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img id="love6" src="love6.jpg" alt="Алина в красивом образе" class="gallery-img">
-                    <div class="gallery-caption">
-                        <h3>Вечерний образ</h3>
-                        <p>Ты прекрасна в любом наряде</p>
-                    </div>
-                </div>
+            <div class="gallery" id="moments-gallery">
+                <!-- Контент будет добавляться через JavaScript -->
             </div>
         </section>
         
-        <!-- Секция с видео дня рождения -->
-        <section>
-            <h2 class="section-title">День рождения</h2>
-            <div class="video-container">
-                <div class="video-wrapper">
-                    <!-- Замените src на ссылку вашего видео -->
-                    <iframe id="birthdayVideo" src="love7.mp4" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                </div>
-                <p class="video-caption">Твой особенный день — 24 декабря 2007</p>
+        <section id="birthdays-section">
+            <h2 class="section-title">Дни рождения</h2>
+            <div class="birthday-container" id="birthdays-container">
+                <!-- Контент будет добавляться через JavaScript -->
             </div>
         </section>
         
-        <section>
+        <section id="memories-section">
             <h2 class="section-title">Наши воспоминания</h2>
-            <div class="memories">
-                <div class="memory-card">
-                    <div class="memory-date">26 СЕНТЯБРЯ 2024</div>
-                    <h3 class="memory-title">Первая встреча</h3>
-                    <p>День, когда всё изменилось. Ты вошла в мою жизнь, и я сразу понял — это начало чего-то невероятного. Первый взгляд, первая улыбка, первые слова — всё это навсегда останется в моей памяти.</p>
-                </div>
-                <div class="memory-card">
-                    <div class="memory-date">8 ОКТЯБРЯ 2024</div>
-                    <h3 class="memory-title">Предложение руки и сердца</h3>
-                    <p>Без тебя мне уже не дышать, не видеть смысла этой жизни. Ты стала для меня важной, особенной, желанной и самой необходимой. Моя любовь к тебе безгранична. Моё сердце принадлежит только тебе. Прошу, стань моей женой.</p>
-                </div>
-                <div class="memory-card">
-                    <div class="memory-date">24 ДЕКАБРЯ 2007</div>
-                    <h3 class="memory-title">Твой день рождения</h3>
-                    <p>День, когда мир стал прекраснее. Видеть тебя счастливой — самый ценный подарок. Каждый год в эту дату я буду благодарить судьбу за то, что ты появилась на свет.</p>
-                </div>
+            <div class="memories" id="memories-container">
+                <!-- Контент будет добавляться через JavaScript -->
+            </div>
+        </section>
+        
+        <section class="add-form">
+            <h2 class="section-title">Добавить воспоминания</h2>
+            <div class="tabs">
+                <div class="tab active" data-tab="moments">Моменты</div>
+                <div class="tab" data-tab="birthdays">Дни рождения</div>
+                <div class="tab" data-tab="memories">Воспоминания</div>
+            </div>
+            
+            <div class="tab-content active" id="moments-form">
+                <form id="momentsForm">
+                    <input type="hidden" id="momentsId">
+                    <div class="form-group">
+                        <label for="momentsFile">Фотография</label>
+                        <input type="file" id="momentsFile" class="form-control" accept="image/*">
+                    </div>
+                    <div class="form-group">
+                        <label for="momentsTitle">Заголовок</label>
+                        <input type="text" id="momentsTitle" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="momentsDesc">Описание</label>
+                        <textarea id="momentsDesc" class="form-control" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group" id="momentsPreview" style="display: none;">
+                        <label>Предпросмотр</label>
+                        <img id="momentsPreviewImg" src="" style="max-width: 100%; border-radius: var(--radius-sm);">
+                    </div>
+                    <button type="submit" class="btn" id="momentsSubmit">Добавить момент</button>
+                    <button type="button" class="btn btn-secondary" id="momentsCancel" style="display: none;">Отмена</button>
+                </form>
+            </div>
+            
+            <div class="tab-content" id="birthdays-form">
+                <form id="birthdaysForm">
+                    <input type="hidden" id="birthdaysId">
+                    <div class="form-group">
+                        <label for="birthdaysFile">Видео или фото</label>
+                        <input type="file" id="birthdaysFile" class="form-control" accept="video/*,image/*">
+                    </div>
+                    <div class="form-group">
+                        <label for="birthdaysTitle">Заголовок</label>
+                        <input type="text" id="birthdaysTitle" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="birthdaysDate">Дата</label>
+                        <input type="date" id="birthdaysDate" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="birthdaysDesc">Описание</label>
+                        <textarea id="birthdaysDesc" class="form-control" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group" id="birthdaysPreview" style="display: none;">
+                        <label>Предпросмотр</label>
+                        <div id="birthdaysPreviewContent"></div>
+                    </div>
+                    <button type="submit" class="btn" id="birthdaysSubmit">Добавить день рождения</button>
+                    <button type="button" class="btn btn-secondary" id="birthdaysCancel" style="display: none;">Отмена</button>
+                </form>
+            </div>
+            
+            <div class="tab-content" id="memories-form">
+                <form id="memoriesForm">
+                    <input type="hidden" id="memoriesId">
+                    <div class="form-group">
+                        <label for="memoriesDate">Дата</label>
+                        <input type="date" id="memoriesDate" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="memoriesTitle">Заголовок</label>
+                        <input type="text" id="memoriesTitle" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="memoriesDesc">Описание</label>
+                        <textarea id="memoriesDesc" class="form-control" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn" id="memoriesSubmit">Добавить воспоминание</button>
+                    <button type="button" class="btn btn-secondary" id="memoriesCancel" style="display: none;">Отмена</button>
+                </form>
             </div>
         </section>
     </main>
@@ -589,9 +792,20 @@
         </div>
     </footer>
     
+    <div class="modal" id="confirmModal">
+        <div class="modal-content">
+            <h3 class="modal-title" id="modalTitle">Подтвердите удаление</h3>
+            <p id="modalMessage">Вы уверены, что хотите удалить этот элемент?</p>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" id="modalCancel">Отмена</button>
+                <button type="button" class="btn btn-danger" id="modalConfirm">Удалить</button>
+            </div>
+        </div>
+    </div>
+    
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Анимация при скролле
+            // Анимация при прокрутке
             const animateOnScroll = (elements) => {
                 elements.forEach(element => {
                     const elementPosition = element.getBoundingClientRect().top;
@@ -604,7 +818,6 @@
                 });
             };
             
-            // Инициализация анимации
             const animatedElements = document.querySelectorAll('.gallery-item, .memory-card');
             animatedElements.forEach(el => {
                 el.style.opacity = '0';
@@ -612,11 +825,10 @@
                 el.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
             });
             
-            // Запуск анимации
             window.addEventListener('load', () => animateOnScroll(animatedElements));
             window.addEventListener('scroll', () => animateOnScroll(animatedElements));
             
-            // Плавающие сердца
+            // Плавающие сердечки
             const heartsContainer = document.getElementById('hearts-container');
             const heartCount = 20;
             
@@ -632,16 +844,7 @@
                 }, i * 300);
             }
             
-            // Интерактивность галереи
-            const galleryItems = document.querySelectorAll('.gallery-item');
-            galleryItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    // Можно добавить модальное окно для просмотра изображений
-                    this.classList.toggle('active');
-                });
-            });
-            
-            // Эффект параллакса для заголовка
+            // Параллакс эффект для заголовка
             window.addEventListener('scroll', function() {
                 const scrollPosition = window.scrollY;
                 const headerContent = document.querySelector('.header-content');
@@ -650,16 +853,15 @@
                 }
             });
             
-            // Управление фоновой музыкой
+            // Музыкальный плеер
             const bgMusic = document.getElementById('bgMusic');
             const musicToggle = document.getElementById('musicToggle');
             let isPlaying = false;
             
-            // Установка громкости на 7% (0.07)
             bgMusic.volume = 0.07;
             
-            // Функция для воспроизведения музыки
             function playMusic() {
+                bgMusic.muted = false;
                 bgMusic.play()
                     .then(() => {
                         isPlaying = true;
@@ -667,120 +869,34 @@
                     })
                     .catch(error => {
                         console.log('Ошибка воспроизведения:', error);
-                    });
-            }
-            
-            // Функция для остановки музыки
-            function pauseMusic() {
-                bgMusic.pause();
-                isPlaying = false;
-                musicToggle.innerHTML = '<div class="music-icon">♪</div>';
-            }
-            
-            // Автовоспроизведение музыки при загрузке страницы
-            document.addEventListener('click', function initAudio() {
-                playMusic();
-                document.removeEventListener('click', initAudio);
-            }, { once: true });
-            
-            // Ручное управление музыкой
-            musicToggle.addEventListener('click', function(e) {
-                e.stopPropagation();
-                if (isPlaying) {
-                    pauseMusic();
-                } else {
-                    playMusic();
-                }
-            });
-            
-            // Управление видео и синхронизация с музыкой
-            const video = document.getElementById('birthdayVideo');
-            let player;
-            
-            // Функция для обработки событий YouTube API
-            function onYouTubeIframeAPIReady() {
-                player = new YT.Player('birthdayVideo', {
-                    events: {
-                        'onStateChange': onPlayerStateChange
-                    }
-                });
-            }
-            
-            // Обработчик событий плеера YouTube
-            function onPlayerStateChange(event) {
-                // Если видео началось (воспроизводится)
-                if (event.data == YT.PlayerState.PLAYING) {
-                    pauseMusic(); // Останавливаем музыку
-                } 
-                // Если видео приостановлено или закончилось
-                else if (event.data == YT.PlayerState.PAUSED || event.data == YT.PlayerState.ENDED) {
-                    playMusic(); // Возобновляем музыку
-                }
-            }
-            
-            // Загрузка YouTube API
-            const tag = document.createElement('script');
-            tag.src = "https://www.youtube.com/iframe_api";
-            const firstScriptTag = document.getElementsByTagName('script')[0];
-            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-            
-            // Глобальная функция для YouTube API
-            window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
-        });
-        document.addEventListener('DOMContentLoaded', function() {
-            const bgMusic = document.getElementById('bgMusic');
-            const musicToggle = document.getElementById('musicToggle');
-            let isPlaying = false;
-
-            // Установка громкости на 7% (0.07)
-            bgMusic.volume = 0.07;
-            
-            // Функция для воспроизведения музыки
-            function playMusic() {
-                bgMusic.muted = false; // Размутируем звук
-                bgMusic.play()
-                    .then(() => {
-                        isPlaying = true;
-                        musicToggle.innerHTML = '<div class="music-icon">♫</div>';
-                    })
-                    .catch(error => {
-                        console.log('Ошибка воспроизведения:', error);
-                        // Показываем кнопку для ручного запуска
                         musicToggle.style.display = 'flex';
                     });
             }
             
-            // Функция для остановки музыки
             function pauseMusic() {
                 bgMusic.pause();
                 isPlaying = false;
                 musicToggle.innerHTML = '<div class="music-icon">♪</div>';
             }
 
-            // Попытка автовоспроизведения при загрузке
             function tryAutoplay() {
                 playMusic();
                 
-                // Проверяем, играет ли музыка через секунду
                 setTimeout(() => {
                     if(!isPlaying) {
-                        // Если нет - показываем кнопку для ручного запуска
                         musicToggle.style.display = 'flex';
                     }
                 }, 1000);
             }
 
-            // Запускаем попытку автовоспроизведения
             tryAutoplay();
 
-            // Также пробуем запустить при любом взаимодействии пользователя
             document.addEventListener('click', function() {
                 if(!isPlaying) {
                     playMusic();
                 }
             }, { once: true });
-
-            // Ручное управление музыкой
+            
             musicToggle.addEventListener('click', function(e) {
                 e.stopPropagation();
                 if (isPlaying) {
@@ -789,11 +905,556 @@
                     playMusic();
                 }
             });
+            
+            // Управление вкладками
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    document.getElementById(this.dataset.tab + '-form').classList.add('active');
+                });
+            });
 
-            // Остальной ваш JavaScript код...
+            // Работа с LocalStorage
+            function saveToLocalStorage(key, data) {
+                localStorage.setItem(key, JSON.stringify(data));
+            }
+
+            function loadFromLocalStorage(key) {
+                const data = localStorage.getItem(key);
+                return data ? JSON.parse(data) : [];
+            }
+
+            // Рендеринг моментов
+            function renderMoments() {
+                const momentsGallery = document.getElementById('moments-gallery');
+                momentsGallery.innerHTML = '';
+                
+                const moments = loadFromLocalStorage('moments') || [];
+                
+                moments.forEach((moment, index) => {
+                    const galleryItem = document.createElement('div');
+                    galleryItem.className = 'gallery-item';
+                    
+                    const img = document.createElement('img');
+                    img.src = moment.src;
+                    img.alt = moment.title;
+                    img.className = 'gallery-img';
+                    
+                    const caption = document.createElement('div');
+                    caption.className = 'gallery-caption';
+                    caption.innerHTML = `
+                        <h3>${moment.title}</h3>
+                        <p>${moment.description}</p>
+                    `;
+                    
+                    const editButtons = document.createElement('div');
+                    editButtons.className = 'edit-buttons';
+                    
+                    const editBtn = document.createElement('button');
+                    editBtn.className = 'edit-btn';
+                    editBtn.innerHTML = '✏️';
+                    editBtn.title = 'Редактировать';
+                    editBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        editMoment(index);
+                    });
+                    
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.className = 'delete-btn';
+                    deleteBtn.innerHTML = '🗑️';
+                    deleteBtn.title = 'Удалить';
+                    deleteBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        showConfirmModal(
+                            'Удалить момент?',
+                            'Вы уверены, что хотите удалить этот момент?',
+                            () => deleteMoment(index)
+                        );
+                    });
+                    
+                    editButtons.appendChild(editBtn);
+                    editButtons.appendChild(deleteBtn);
+                    
+                    galleryItem.appendChild(img);
+                    galleryItem.appendChild(caption);
+                    galleryItem.appendChild(editButtons);
+                    momentsGallery.appendChild(galleryItem);
+                });
+            }
+
+            // Рендеринг дней рождения
+            function renderBirthdays() {
+    const birthdaysContainer = document.getElementById('birthdays-container');
+    birthdaysContainer.innerHTML = '';
+    
+    const birthdays = loadFromLocalStorage('birthdays') || [];
+    
+    birthdays.forEach((birthday, index) => {
+        const birthdayItem = document.createElement('div');
+        birthdayItem.className = 'birthday-item';
+        
+        const wrapper = document.createElement('div');
+        wrapper.className = 'video-wrapper';
+        
+        // Для видео используем iframe, для фото - img
+        if (birthday.type === 'video') {
+            const iframe = document.createElement('iframe');
+            iframe.src = birthday.src;
+            iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+            iframe.allowFullscreen = true;
+            wrapper.appendChild(iframe);
+        } else {
+            const img = document.createElement('img');
+            img.src = birthday.src;
+            img.style.width = '100%';
+            img.style.height = '100%';
+            img.style.objectFit = 'cover';
+            wrapper.appendChild(img);
+        }
+        
+        birthdayItem.appendChild(wrapper);
+        
+        const caption = document.createElement('p');
+        caption.className = 'video-caption';
+        caption.textContent = `${birthday.title} — ${new Date(birthday.date).toLocaleDateString()}`;
+        
+        // Кнопки редактирования/удаления
+        const editButtons = document.createElement('div');
+        editButtons.className = 'edit-buttons';
+        
+        const editBtn = document.createElement('button');
+        editBtn.className = 'edit-btn';
+        editBtn.innerHTML = '✏️';
+        editBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            editBirthday(index);
         });
+        
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'delete-btn';
+        deleteBtn.innerHTML = '🗑️';
+        deleteBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            showConfirmModal(
+                'Удалить день рождения?',
+                'Вы уверены, что хотите удалить эту запись о дне рождения?',
+                () => deleteBirthday(index)
+            );
+        });
+        
+        editButtons.appendChild(editBtn);
+        editButtons.appendChild(deleteBtn);
+        
+        birthdayItem.appendChild(caption);
+        birthdayItem.appendChild(editButtons);
+        birthdaysContainer.appendChild(birthdayItem);
+    });
+}
 
-        // Код для управления YouTube видео (если нужно)
+            // Рендеринг воспоминаний
+            function renderMemories() {
+                const memoriesContainer = document.getElementById('memories-container');
+                memoriesContainer.innerHTML = '';
+                
+                const memories = loadFromLocalStorage('memories') || [];
+                
+                memories.forEach((memory, index) => {
+                    const memoryCard = document.createElement('div');
+                    memoryCard.className = 'memory-card';
+                    
+                    const date = document.createElement('div');
+                    date.className = 'memory-date';
+                    date.textContent = new Date(memory.date).toLocaleDateString('ru-RU', { 
+                        day: 'numeric', 
+                        month: 'long', 
+                        year: 'numeric' 
+                    }).toUpperCase();
+                    
+                    const title = document.createElement('h3');
+                    title.className = 'memory-title';
+                    title.textContent = memory.title;
+                    
+                    const desc = document.createElement('p');
+                    desc.textContent = memory.description;
+                    
+                    const editButtons = document.createElement('div');
+                    editButtons.className = 'edit-buttons';
+                    
+                    const editBtn = document.createElement('button');
+                    editBtn.className = 'edit-btn';
+                    editBtn.innerHTML = '✏️';
+                    editBtn.title = 'Редактировать';
+                    editBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        editMemory(index);
+                    });
+                    
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.className = 'delete-btn';
+                    deleteBtn.innerHTML = '🗑️';
+                    deleteBtn.title = 'Удалить';
+                    deleteBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        showConfirmModal(
+                            'Удалить воспоминание?',
+                            'Вы уверены, что хотите удалить это воспоминание?',
+                            () => deleteMemory(index)
+                        );
+                    });
+                    
+                    editButtons.appendChild(editBtn);
+                    editButtons.appendChild(deleteBtn);
+                    
+                    memoryCard.appendChild(date);
+                    memoryCard.appendChild(title);
+                    memoryCard.appendChild(desc);
+                    memoryCard.appendChild(editButtons);
+                    memoriesContainer.appendChild(memoryCard);
+                });
+            }
+
+            // Редактирование моментов
+            function editMoment(index) {
+                const moments = loadFromLocalStorage('moments');
+                const moment = moments[index];
+                
+                document.getElementById('momentsId').value = index;
+                document.getElementById('momentsTitle').value = moment.title;
+                document.getElementById('momentsDesc').value = moment.description;
+                
+                const preview = document.getElementById('momentsPreview');
+                const previewImg = document.getElementById('momentsPreviewImg');
+                previewImg.src = moment.src;
+                preview.style.display = 'block';
+                
+                document.getElementById('momentsSubmit').textContent = 'Сохранить изменения';
+                document.getElementById('momentsCancel').style.display = 'inline-block';
+                
+                document.querySelector('.tab[data-tab="moments"]').click();
+            }
+
+            // Редактирование дней рождения
+            function editBirthday(index) {
+    const birthdays = loadFromLocalStorage('birthdays');
+    const birthday = birthdays[index];
+    
+    document.getElementById('birthdaysId').value = index;
+    document.getElementById('birthdaysTitle').value = birthday.title;
+    document.getElementById('birthdaysDate').value = birthday.date;
+    document.getElementById('birthdaysDesc').value = birthday.description;
+    
+    const preview = document.getElementById('birthdaysPreview');
+    const previewContent = document.getElementById('birthdaysPreviewContent');
+    previewContent.innerHTML = '';
+    
+    if (birthday.type === 'video') {
+        const video = document.createElement(birthday.src.startsWith('data:') ? 'video' : 'iframe');
+        video.src = birthday.src;
+        if (video.tagName === 'VIDEO') {
+            video.controls = true;
+        } else {
+            video.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+            video.allowFullscreen = true;
+        }
+        video.style.width = '100%';
+        previewContent.appendChild(video);
+    } else {
+        const img = document.createElement('img');
+        img.src = birthday.src;
+        img.style.maxWidth = '100%';
+        img.style.borderRadius = 'var(--radius-sm)';
+        previewContent.appendChild(img);
+    }
+    
+    preview.style.display = 'block';
+    
+    document.getElementById('birthdaysSubmit').textContent = 'Сохранить изменения';
+    document.getElementById('birthdaysCancel').style.display = 'inline-block';
+    
+    document.querySelector('.tab[data-tab="birthdays"]').click();
+}
+
+
+            // Редактирование воспоминаний
+            function editMemory(index) {
+                const memories = loadFromLocalStorage('memories');
+                const memory = memories[index];
+                
+                document.getElementById('memoriesId').value = index;
+                document.getElementById('memoriesDate').value = memory.date;
+                document.getElementById('memoriesTitle').value = memory.title;
+                document.getElementById('memoriesDesc').value = memory.description;
+                
+                document.getElementById('memoriesSubmit').textContent = 'Сохранить изменения';
+                document.getElementById('memoriesCancel').style.display = 'inline-block';
+                
+                document.querySelector('.tab[data-tab="memories"]').click();
+            }
+
+            // Удаление моментов
+            function deleteMoment(index) {
+                const moments = loadFromLocalStorage('moments');
+                moments.splice(index, 1);
+                saveToLocalStorage('moments', moments);
+                renderMoments();
+                hideConfirmModal();
+            }
+
+            // Удаление дней рождения
+            function deleteBirthday(index) {
+                const birthdays = loadFromLocalStorage('birthdays');
+                birthdays.splice(index, 1);
+                saveToLocalStorage('birthdays', birthdays);
+                renderBirthdays();
+                hideConfirmModal();
+            }
+
+            // Удаление воспоминаний
+            function deleteMemory(index) {
+                const memories = loadFromLocalStorage('memories');
+                memories.splice(index, 1);
+                saveToLocalStorage('memories', memories);
+                renderMemories();
+                hideConfirmModal();
+            }
+
+            // Модальное окно подтверждения
+            function showConfirmModal(title, message, confirmCallback) {
+                document.getElementById('modalTitle').textContent = title;
+                document.getElementById('modalMessage').textContent = message;
+                document.getElementById('confirmModal').style.display = 'flex';
+                
+                const confirmBtn = document.getElementById('modalConfirm');
+                confirmBtn.onclick = function() {
+                    confirmCallback();
+                };
+            }
+
+            function hideConfirmModal() {
+                document.getElementById('confirmModal').style.display = 'none';
+            }
+
+            // Сброс форм
+            function resetForm(formType) {
+                document.getElementById(`${formType}Id`).value = '';
+                document.getElementById(`${formType}Form`).reset();
+                document.getElementById(`${formType}Submit`).textContent = formType === 'moments' ? 'Добавить момент' : 
+                                                                           formType === 'birthdays' ? 'Добавить день рождения' : 'Добавить воспоминание';
+                document.getElementById(`${formType}Cancel`).style.display = 'none';
+                
+                if (formType === 'moments' || formType === 'birthdays') {
+                    document.getElementById(`${formType}Preview`).style.display = 'none';
+                }
+            }
+
+            // Обработчики кнопок отмены
+            document.getElementById('momentsCancel').addEventListener('click', function() {
+                resetForm('moments');
+            });
+
+            document.getElementById('birthdaysCancel').addEventListener('click', function() {
+                resetForm('birthdays');
+            });
+
+            document.getElementById('memoriesCancel').addEventListener('click', function() {
+                resetForm('memories');
+            });
+
+            // Обработчик кнопки отмены в модальном окне
+            document.getElementById('modalCancel').addEventListener('click', hideConfirmModal);
+
+            // Предпросмотр изображений для моментов
+            document.getElementById('momentsFile').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById('momentsPreviewImg').src = e.target.result;
+                        document.getElementById('momentsPreview').style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Предпросмотр видео/изображений для дней рождения
+            document.getElementById('birthdaysFile').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const previewContent = document.getElementById('birthdaysPreviewContent');
+                        previewContent.innerHTML = '';
+                        
+                        if (file.type.includes('video')) {
+                            const video = document.createElement('video');
+                            video.src = e.target.result;
+                            video.controls = true;
+                            video.style.width = '100%';
+                            previewContent.appendChild(video);
+                        } else {
+                            const img = document.createElement('img');
+                            img.src = e.target.result;
+                            img.style.maxWidth = '100%';
+                            img.style.borderRadius = 'var(--radius-sm)';
+                            previewContent.appendChild(img);
+                        }
+                        
+                        document.getElementById('birthdaysPreview').style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Обработчик формы моментов
+            document.getElementById('momentsForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const file = document.getElementById('momentsFile').files[0];
+                const title = document.getElementById('momentsTitle').value;
+                const description = document.getElementById('momentsDesc').value;
+                const id = document.getElementById('momentsId').value;
+                
+                if (!file && id === '') {
+                    alert('Пожалуйста, выберите фотографию');
+                    return;
+                }
+                
+                const moments = loadFromLocalStorage('moments') || [];
+                
+                if (id !== '') {
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            moments[id].src = e.target.result;
+                            moments[id].title = title;
+                            moments[id].description = description;
+                            saveToLocalStorage('moments', moments);
+                            renderMoments();
+                            resetForm('moments');
+                        };
+                        reader.readAsDataURL(file);
+                    } else {
+                        moments[id].title = title;
+                        moments[id].description = description;
+                        saveToLocalStorage('moments', moments);
+                        renderMoments();
+                        resetForm('moments');
+                    }
+                } else {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        moments.push({
+                            src: e.target.result,
+                            title: title,
+                            description: description
+                        });
+                        
+                        saveToLocalStorage('moments', moments);
+                        renderMoments();
+                        resetForm('moments');
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Обработчик формы дней рождения
+            document.getElementById('birthdaysForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const file = document.getElementById('birthdaysFile').files[0];
+    const title = document.getElementById('birthdaysTitle').value;
+    const date = document.getElementById('birthdaysDate').value;
+    const description = document.getElementById('birthdaysDesc').value;
+    const id = document.getElementById('birthdaysId').value;
+    
+    if (!file && id === '') {
+        alert('Пожалуйста, выберите видео или фото');
+        return;
+    }
+    
+    const birthdays = loadFromLocalStorage('birthdays') || [];
+    
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        // Определяем тип контента
+        const type = file ? (file.type.includes('video') ? 'video' : 'image') : birthdays[id].type;
+        
+        if (id !== '') {
+            // Редактирование существующей записи
+            birthdays[id] = {
+                type: type,
+                src: file ? e.target.result : birthdays[id].src,
+                title: title,
+                date: date,
+                description: description
+            };
+        } else {
+            // Добавление новой записи
+            birthdays.push({
+                type: type,
+                src: e.target.result,
+                title: title,
+                date: date,
+                description: description
+            });
+        }
+        
+        saveToLocalStorage('birthdays', birthdays);
+        renderBirthdays();
+        resetForm('birthdays');
+    };
+    
+    if (file) {
+        reader.readAsDataURL(file);
+    } else {
+        // Если файл не выбран (при редактировании), сохраняем существующий src
+        reader.onload({ target: { result: birthdays[id].src } });
+    }
+});
+
+            // Обработчик формы воспоминаний
+            document.getElementById('memoriesForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const date = document.getElementById('memoriesDate').value;
+                const title = document.getElementById('memoriesTitle').value;
+                const description = document.getElementById('memoriesDesc').value;
+                const id = document.getElementById('memoriesId').value;
+                
+                const memories = loadFromLocalStorage('memories') || [];
+                
+                if (id !== '') {
+                    memories[id].date = date;
+                    memories[id].title = title;
+                    memories[id].description = description;
+                    saveToLocalStorage('memories', memories);
+                    renderMemories();
+                    resetForm('memories');
+                } else {
+                    memories.push({
+                        date: date,
+                        title: title,
+                        description: description
+                    });
+                    
+                    saveToLocalStorage('memories', memories);
+                    renderMemories();
+                    resetForm('memories');
+                }
+            });
+
+            // Инициализация
+            renderMoments();
+            renderBirthdays();
+            renderMemories();
+        });
     </script>
 </body>
 </html>
